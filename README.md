@@ -1,4 +1,8 @@
-# CCAPDEV = MCO GROUP # 6 - Forum Web Application
+# CCAPDEV - MCO GROUP # 6 - Forum Web Application
+
+## References/Links:
+
+- https://docs.google.com/document/d/1pFlfcLxUMrRL4COr6hdW-7MrlG-6oGyRDSmDqSi5Ok4/edit?usp=sharing (MCO Specs, Draft)
 
 ## Overview
 
