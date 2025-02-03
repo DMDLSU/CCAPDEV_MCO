@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum Template</title>
     <style>
-        /* General body styling */
+        
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@
             color: #333;
         }
 
-        /* Sticky Navigation Bar */
+        
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -25,14 +25,14 @@
             z-index: 1000; /* Ensures the navbar stays on top of other content */
         }
 
-        /* Logo styling */
+        
         .navbar .logo {
             color: #fff;
             font-size: 24px;
             font-weight: bold;
         }
 
-        /* Navigation links styling */
+        
         .navbar .nav-links {
             list-style: none;
             margin: 0;
@@ -53,8 +53,52 @@
         .navbar .nav-links a:hover {
             color: #ddd;
         }
+      
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: darkslategrey;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 90px;
+        }
 
-        /* Content Area Styling */
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: goldenrod;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        
         .content {
             padding: 20px;
             max-width: 800px;
@@ -89,7 +133,8 @@
             padding: 7px 17px;
             margin-right: 10px;
             cursor: pointer;
-            border-radius: 5px
+            border-radius: 5px;
+            border: none;
         }
 
 
@@ -109,6 +154,18 @@
         </ul>
     </nav>
 
+    <div id = "mysidebar" class = "sidebar">
+        <a href="#">test</a>
+        <a href="#">test</a>
+        <a href="#">test</a>
+        <a href="#">test</a>
+    </div>
+
+    <div id="main">
+        <button class="openbtn" onclick="toggleNav()">☰</button> 
+    </div>
+
+
     <!-- Content --> 
     <div class="content">
         <h1>Welcome to the Forum</h1>
@@ -123,8 +180,22 @@
             Dislike
             </button>
         </div>
-
-
     </div>
+
+    <script>
+        function toggleNav() { //modified collapsable side bar version of w3 example
+            let sidebar = document.getElementById("mysidebar");
+            let main = document.getElementById("main");
+
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+                main.style.marginLeft = "0";
+            } else {
+                sidebar.style.width = "250px";
+                main.style.marginLeft = "250px";
+            }
+        }
+    </script>
+
 </body>
 </html>
