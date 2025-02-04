@@ -96,6 +96,7 @@
             background-color: goldenrod;
             color: white;
             padding: 8px 15px;
+            position: fixed;
             border: none;
         }
 
@@ -143,6 +144,55 @@
             border: none;
         }
 
+        .tags {
+            margin: 10px 0;
+        }
+
+        .tags span {
+            display: inline-block;
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .comments {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .comments p {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .commentbox {
+            display : none;
+            margin-top: 10px;
+        }
+
+        .commentbox textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid grey;
+            resize: vertical;
+        }
+
+        .commentbox button {
+            margin-top: 10px;
+            background-color: orangered;
+            color: white;
+            padding: 7px 17px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
 
 
@@ -175,8 +225,14 @@
 
     <!-- Content --> 
     <div class="content">
-        <h1>Welcome to the Forum</h1>
+        <h1>I NEED HELP</h1>
         <img src="https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Italian Trulli">
+        
+        <div class = "tags">
+            <span>#subject</span>
+            <span>#help</span>
+            <span>#study</span>
+        </div>
         
         <!-- Adds interaction buttons (like and dislike) -->
         <div class ="interaction-buttons">
@@ -186,14 +242,31 @@
             <button class = "dislike">
             Dislike
             </button>
+            <button class = "comment" onclick = "toggleCommentbox(this)">Comment</button>
+        </div>
+
+        <div class = "commentbox">
+            <textarea placeholder="Write a comment..."></textarea>
+            <button>Submit</button>
+        </div>
+
+        <div class = "comments">
+            <!-- scuffed implementation, using <strong> to make the username bold -->
+            <p><strong>StrongHelper:</strong> Ok i will help! </p> 
+            <p><strong>Brainrot:</strong> frfr </p>    
         </div>
     </div>
 
     <!-- temporary static content pages -->
-
     <div class="content">
-        <h1> Content </h1>
+        <h1>WTF is this!!</h1>
         <img src="https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Italian Trulli">
+        
+        <div class = "tags">
+            <span>#prof </span>
+            <span>#drama </span>
+            <span>#rant </span>
+        </div>
         
         <!-- Adds interaction buttons (like and dislike) -->
         <div class ="interaction-buttons">
@@ -203,53 +276,24 @@
             <button class = "dislike">
             Dislike
             </button>
+            <button class = "comment" onclick = "toggleCommentbox(this)">Comment</button>
+        </div>
+
+        <div class = "commentbox">
+            <textarea placeholder="Write a comment..."></textarea>
+            <button>Submit</button>
+        </div>
+
+        <div class = "comments">
+            <!-- scuffed implementation, using <strong> to make the username bold -->
+            <p><strong>Randymarsh:</strong> hmmm </p> 
+            <p><strong>Skibidi:</strong> nice! </p>  
+            <p><strong>Hater:</strong> noob! </p>   
         </div>
     </div>
 
-    <div class="content">
-        <h1> Content </h1>
-        <img src="https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Italian Trulli">
-        
-        <!-- Adds interaction buttons (like and dislike) -->
-        <div class ="interaction-buttons">
-            <button class = "like">
-            Like
-            </button>
-            <button class = "dislike">
-            Dislike
-            </button>
-        </div>
-    </div>
-
-    <div class="content">
-        <h1> Content </h1>
-        <img src="https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Italian Trulli">
-        
-        <!-- Adds interaction buttons (like and dislike) -->
-        <div class ="interaction-buttons">
-            <button class = "like">
-            Like
-            </button>
-            <button class = "dislike">
-            Dislike
-            </button>
-        </div>
-    </div>
-
-    <div class="content">
-        <h1> Content </h1>
-        <img src="https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Italian Trulli">
-        
-        <!-- Adds interaction buttons (like and dislike) -->
-        <div class ="interaction-buttons">
-            <button class = "like">
-            Like
-            </button>
-            <button class = "dislike">
-            Dislike
-            </button>
-        </div>
-    </div>
+    
+    <!-- temporary static content pages end -->
 
     <script>
         function toggleNav() { //modified collapsable side bar version of w3 example
@@ -263,6 +307,11 @@
                 sidebar.style.width = "250px";
                 main.style.marginLeft = "250px";
             }
+        }
+
+        function toggleCommentbox(button) {
+            let commentbox = button.parentElement.nextElementSibling;
+            commentbox.style.display = commentbox.style.display === "block" ? "none" : "block";
         }
     </script>
 
