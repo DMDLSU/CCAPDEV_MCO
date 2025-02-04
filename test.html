@@ -9,8 +9,8 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: white;
+            color: black;
         }
 
         
@@ -33,24 +33,24 @@
         }
 
         
-        .navbar .nav-links {
+        .navbar .navlinks {
             list-style: none;
             margin: 0;
             padding: 0;
             display: flex;
         }
 
-        .navbar .nav-links li {
+        .navbar .navlinks li {
             margin-left: 20px;
         }
 
-        .navbar .nav-links a {
+        .navbar .navlinks a {
             color: #fff;
             text-decoration: none;
             font-size: 16px;
         }
 
-        .navbar .nav-links a:hover {
+        .navbar .navlinks a:hover {
             color: #ddd;
         }
       
@@ -61,7 +61,7 @@
             z-index: 1;
             top: 0;
             left: 0;
-            background-color: #222222;
+            background-color: #1f1f1f;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 90px;
@@ -88,6 +88,63 @@
             padding-left: 8px;
             font-size: 30px;
             font-style: bold;
+        }
+
+        .profilebar {
+            height: 100%;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            width: 0;
+            position: fixed;
+            background-color: orange;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .profilebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .profilebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .profilebar p {
+            padding-left: 8px;
+            font-size: 30px;
+            font-style: bold;
+        }
+
+        .profilebar .profileinfo {
+            padding: 20px;
+            color: white;
+        }
+
+        .profilebar .profileinfo img {
+            width: 70px;
+            height: 70px;
+            border-radius: 60%; /* thanks w3schools*/
+            margin-bottom: 8px;
+        }
+
+        .profilebar .profileifo {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .profilebar .profileinfo p {
+            margin: 5px 0;
+            font-size: 16px
         }
 
         .openbtn {
@@ -199,23 +256,37 @@
     </style>
 </head>
 <body>
-    <!-- -->
+    <!-- sticky navbar -->
     <nav class="navbar">
         <div class="logo">DLSU FORUM</div>
-        <ul class="nav-links">
+        <ul class="navlinks">
             <li><a href="#">Home</a></li>
             <li><a href="#">Categories</a></li>
             <li><a href="#">Members</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="#" onclick = "toggleProfilebar()">Profile</a></li>
         </ul>
     </nav>
 
+    <!-- sidebar which is for going through tags? or categories? not sure yet-->
     <div id = "mysidebar" class = "sidebar">
         <p> CATEGORIES </p>
         <a href="#">#Course Discussions</a>
         <a href="#">#Org Discussions</a>
         <a href="#">#Prof Discussions</a>
         <a href="#">#Offtopic</a>
+    </div>
+
+    <!-- profile bar which displays profile info, maybe adding buttons in the lower part for site settings and shi-->
+    <div id = "profilebar" class = "profilebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleProfilebar()">&times;</a>
+        <div class="profileinfo">
+            <img src="https://i.pinimg.com/736x/e5/59/a4/e559a43c018434ed69c5220f85f0f6d6.jpg" alt="profile pic">
+            <h2>Anime_Girl79</h2>
+            <p>Email: animegirl@yahoo.jp</p>
+            <p>Member since: January 2024</p>
+            <p>Posts: 99999</p>
+            <p>Comments: 99999</p>
+        </div>
     </div>
 
     <div id="main">
@@ -234,7 +305,7 @@
             <span>#study</span>
         </div>
         
-        <!-- Adds interaction buttons (like and dislike) -->
+        <!-- Adds interaction buttons (like and dislike) and comments now! -->
         <div class ="interaction-buttons">
             <button class = "like">
             Like
@@ -309,7 +380,16 @@
             }
         }
 
-        function toggleCommentbox(button) {
+        function toggleProfilebar() { //script to toggle profile bar off/on same thing as togglenav
+            let profilebar = document.getElementById ("profilebar");
+            if (profilebar.style.width === "250px") {
+                profilebar.style.width = "0";
+            } else {
+                profilebar.style.width = "250px";
+            }
+        }
+
+        function toggleCommentbox(button) { //toggles the commentbox on/off (contained in a single content div)
             let commentbox = button.parentElement.nextElementSibling;
             commentbox.style.display = commentbox.style.display === "block" ? "none" : "block";
         }
