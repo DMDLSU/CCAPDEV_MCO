@@ -22,7 +22,7 @@
             padding: 10px 20px;
             position: sticky;
             top: 0;
-            z-index: 1000; /* Ensures the navbar stays on top of other content */
+            z-index: 1000; 
         }
 
         
@@ -53,6 +53,18 @@
         .navbar .navlinks a:hover {
             color: #ddd;
         }
+
+        .navbar .searchbar {
+            margin: 0 15px;
+        }
+
+        .navbar .searchbar input {
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
       
         .sidebar {
             height: 100%;
@@ -65,6 +77,7 @@
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 90px;
+            z-index: 999;
         }
 
         .sidebar a {
@@ -167,9 +180,9 @@
             padding: 20px;
             max-width: 800px;
             margin: 20px auto;
-            background-color: #fff;
+            background-color: #faf7f7;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(21, 19, 19, 0.1);
             margin-top: 20px;
         }
 
@@ -251,6 +264,22 @@
             cursor: pointer;
         }
 
+        .createpost {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #61f966;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .createpost:hover {
+            background-color: #317034;
+        }
 
 
     </style>
@@ -259,6 +288,9 @@
     <!-- sticky navbar -->
     <nav class="navbar">
         <div class="logo">DLSU FORUM</div>
+        <div class = "searchbar">
+            <input type = "text" placeholder = "Search for a post!">
+        </div>
         <ul class="navlinks">
             <li><a href="#">Home</a></li>
             <li><a href="#">Categories</a></li>
@@ -294,6 +326,7 @@
         <button class="openbtn" onclick="toggleNav()">☰</button> 
     </div>
 
+    <button class="createpost" onclick="createPost()">CREATE POST</button> <!-- not sure if i sure use href or just create a function to toggle a box for creating a post-->
 
     <!-- Content --> 
     <div class="content">
@@ -367,6 +400,8 @@
     
     <!-- temporary static content pages end -->
 
+
+    <!-- scripts for toggling sidebar, profile etc.-->
     <script>
         function toggleNav() { //modified collapsable side bar version of w3 example
             let sidebar = document.getElementById("mysidebar");
@@ -393,6 +428,10 @@
         function toggleCommentbox(button) { //toggles the commentbox on/off (contained in a single content div)
             let commentbox = button.parentElement.nextElementSibling;
             commentbox.style.display = commentbox.style.display === "block" ? "none" : "block";
+        }
+
+        function createPost(){ //does nothing for now/ placeholder 
+
         }
     </script>
 
