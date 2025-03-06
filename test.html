@@ -79,7 +79,6 @@
         </div>
     </div>
 
-
     <!-- sticky  button that opens up categories => ☰ -->
     <div id="main">
         <button class="openbtn" onclick="toggleNav()">☰</button> 
@@ -106,7 +105,6 @@
         </div>
     </div>
 
-
     <!-- Content --> 
     <div class="content">
         <h1>I NEED HELP</h1>
@@ -122,13 +120,12 @@
         
         <!-- Adds interaction buttons (like and dislike) and comments now! -->
         <div class ="interaction-buttons">
-            <button class = "like">
-            Like
-            </button>
-            <button class = "dislike">
-            Dislike
-            </button>
+            <button class = "like" onclick="handleLike(this)">Like</button>
+            <button class = "dislike" onclick="handleDislike(this)">Dislike</button>    
+            <span class="vote-counter">0</span>
             <button class = "comment" onclick = "toggleCommentbox(this)">Comment</button>
+            <button class = "edit-post" onclick = "editPost(this)">Edit Post</button>
+            <button class = "delete-post" onclick = "deletePost(this)">Delete Post</button>
         </div>
 
         <div class = "commentbox">
@@ -167,13 +164,12 @@
         
         <!-- Adds interaction buttons (like and dislike) -->
         <div class ="interaction-buttons">
-            <button class = "like">
-            Like
-            </button>
-            <button class = "dislike">
-            Dislike
-            </button>
+            <button class = "like" onclick="handleLike(this)">Like</button>
+            <button class = "dislike" onclick="handleDislike(this)">Dislike</button>    
+            <span class="vote-counter">0</span>
             <button class = "comment" onclick = "toggleCommentbox(this)">Comment</button>
+            <button class = "edit-post" onclick = "editPost(this)">Edit Post</button>
+            <button class = "delete-post" onclick = "deletePost(this)">Delete Post</button>
         </div>
 
         <div class = "commentbox">
@@ -223,13 +219,12 @@
         </div>
     
         <div class="interaction-buttons">
-            <button class="like">
-                Like
-            </button>
-            <button class="dislike">
-                Dislike
-            </button>
+            <button class = "like" onclick="handleLike(this)">Like</button>
+            <button class = "dislike" onclick="handleDislike(this)">Dislike</button>    
+            <span class="vote-counter">0</span>
             <button class="comment" onclick="toggleCommentbox(this)">Comment</button>
+            <button class = "edit-post" onclick = "editPost(this)">Edit Post</button>
+            <button class = "delete-post" onclick = "deletePost(this)">Delete Post</button>
         </div>
     
         <!-- Comment box -->
@@ -245,7 +240,6 @@
     </div>    
 
     <!-- temporary static content pages end -->
-
 
     <!-- scripts for toggling sidebar, profile etc.-->
     <script>
@@ -304,6 +298,39 @@
                 }
         }
 
+        function handleLike(button) {
+        const interactionButtons = button.parentElement;
+        const counter = interactionButtons.querySelector('.vote-counter');
+        let currentCount = parseInt(counter.textContent);
+
+    
+        if (button.classList.contains('active-dislike')) {
+            currentCount += 2; 
+        } else if (!button.classList.contains('active-like')) {
+            currentCount += 1; 
+        }
+
+    button.classList.toggle('active-like');
+    counter.textContent = currentCount;
+}
+
+    function handleDislike(button) {
+        const interactionButtons = button.parentElement;
+        const counter = interactionButtons.querySelector('.vote-counter');
+        let currentCount = parseInt(counter.textContent);
+
+    
+    if (button.classList.contains('active-like')) {
+        currentCount -= 2; 
+    } else if (!button.classList.contains('active-dislike')) {
+        currentCount -= 1; 
+    }
+
+    
+        button.classList.toggle('active-dislike');
+        counter.textContent = currentCount;
+}
+
         function toggleProfilebar() { // script to toggle profile bar off/on
             let profilebar = document.getElementById("profilebar");
             let categoriesbar = document.getElementById("categoriesbar");
@@ -339,7 +366,6 @@
             }
         }
 
-
         function toggleCommentbox(button) { //toggles the commentbox on/off (contained in a single content div)
             let commentbox = button.parentElement.nextElementSibling;
             commentbox.style.display = commentbox.style.display === "block" ? "none" : "block";
@@ -353,7 +379,13 @@
             document.getElementById("createpostbox").style.display = "none";
         }
 
+        function editPost(button) { // Placeholder for edit post functionality
+            //do nothing
+        }
 
+        function deletePost(button) { // Placeholder for delete post functionality
+            //do nothing
+        }
     </script>
 
 </body>

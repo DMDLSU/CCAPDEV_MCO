@@ -494,3 +494,20 @@ background-color: #45a049;
     cursor: pointer;
     align-self: flex-end;
 }
+
+.vote-counter {
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.like.active-like {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.dislike.active-dislike {
+    background-color: #f44336;
+    color: white;
+}
