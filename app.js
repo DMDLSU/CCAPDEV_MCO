@@ -27,6 +27,32 @@ server.set('views', path.join(__dirname, 'views'));
 
 server.use(express.static(path.join(__dirname, 'public')));
 
+//MongoDB connection
+//Please check na lang if tama
+const { MongoClient } = require('mongodb');
+const dURL = "mongodb://127.0.0.1:27017/";
+const mongoClient = new MongoClient(dURL);
+
+const databaseName = "forumdb";
+const userdb = "users";
+const postdb = "posts";
+const commentsdb = "comments";
+
+
+async function initialConntection(){
+    let con = await mongoClient.connect();
+    console.log('Attempt to connect to ' +dURL);
+    const dbo = mongoClient.db(databaseName);
+ 
+    dbo.createCollection(userdb);       //database for users
+    dbo.createCollection(postdb);       //database for posts
+    dbo.createCollection(commentsdb);   //database for comments
+}
+initialConntection();
+
+//until here
+
+
 //server.get('/', isAuthenticated, (req, res) => res.render('index', { title: 'Forum Home' })); Change line 30 to this line if middleware is used
 server.get('/', (req, res) => res.render('index', { title: 'Forum Home'}));
 server.get('/login', (req, res) => res.render('login', { title: 'Login', layout: 'loginLayout' }));
