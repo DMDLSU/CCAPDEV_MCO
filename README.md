@@ -45,3 +45,7 @@ These are not final yet, and subject to change as such.
 
 ### 8. General
 - **User Experience**: Simple and easy-to-use interface.
+
+## Instructions on Setup & Running:
+
+### TO BE DONE
