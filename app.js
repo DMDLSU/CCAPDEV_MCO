@@ -1,3 +1,16 @@
+/*
+ * MCO2 Web Forum
+ * 
+ * Members:                    Section:
+ * Jandeil Dural                    N01
+ * Dion Mel Cubarrubias             N01
+ * Justin Patrick De Grano          N01
+ * Dlareinnej Jherby C. Jaime       S15
+ * 
+ * 
+*/
+
+
 const express = require('express');
 const server = express();
 const path = require('path');
