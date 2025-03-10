@@ -51,11 +51,11 @@ These are not final yet, and subject to change as such.
 ### 1. Install Prerequisites
 - **MongoDB Shell/Compasss**
 - **NodeJS & Modules**:
- - mongodb
- - express-session
- - express-flash, connect-flash
- - --save-dev @types/node
- - toastr
+  - mongodb
+  - express-session
+  - express-flash, connect-flash
+  - --save-dev @types/node
+  - toastr
 
 ### 2. Run app.js via Command Shell
  - `X:\(application directory)\> node app.js`
