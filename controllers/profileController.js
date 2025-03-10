@@ -35,7 +35,7 @@ async function login(req, res) {
 //user reegistration
 async function register(req, res) {
     try {
-        const { password, username} = req.body;
+        const { email, password, username} = req.body;
        //checker if username exist
         const existingUser = await userModel.getuserUsername(username);
         
@@ -43,7 +43,7 @@ async function register(req, res) {
             return res.render('register', { 
                 title: 'Register', 
                 layout: 'loginLayout', 
-                error: 'the username already exists, please try another name.' 
+                error: 'This username is already used, please use another one.' 
             });
         }
     
@@ -52,6 +52,7 @@ async function register(req, res) {
         // Set the current user after registration
         tempuserhehe.setcurrentUser({
             username,
+            email, 
             password,
             _id: newUser.insertedId,
             joinDate: new Date(),
