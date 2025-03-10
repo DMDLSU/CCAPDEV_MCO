@@ -48,4 +48,21 @@ These are not final yet, and subject to change as such.
 
 ## Instructions on Setup & Running:
 
-### TO BE DONE
+### 1. Install Prerequisites
+- **MongoDB Shell/Compasss**
+- **NodeJS & Modules**:
+ - mongodb
+ - express-session
+ - express-flash, connect-flash
+ - --save-dev @types/node
+ - toastr
+
+### 2. Run app.js via Command Shell
+ - `X:\(application directory)\> node app.js`
+
+### 3. Check Application via NodeJS & Database via MongoDB URL
+- Access the application by visiting:  
+  `http://localhost:3000`
+  
+- Check the database connection using the MongoDB URL:  
+  `mongodb://127.0.0.1:27017/`
