@@ -1,53 +1,61 @@
-
-
 <button class="createpost" onclick="createPost()">CREATE POST</button> 
 
 <div id="createpostbox" class="createpostbox">
     <div class="createpostcontent">
         <span class="closebtn" onclick="closePost()">X</span> 
         <h2>Create a new post!</h2>
-        <input type="text" id="posttitle" placeholder="Post Title..">
-        <textarea id="postcontent" placeholder="Content of your post..."></textarea>
-        <input type="text" id="posttags" placeholder="Enter tags (Example: #drama #study #help)">
+        <form action="/post/create" method="post">
+            <input type="text" id="posttitle" name="title" placeholder="Post Title.." required>
+            <textarea id="postcontent" name="content" placeholder="Content of your post..." required></textarea>
+            <input type="text" id="posttags" name="tags" placeholder="Enter tags (Example: #drama #study #help)">
 
-        <label for="postcategory">Select Category:</label>
-        <select id="postcategory">
-            <option value="image">Image Post</option>
-            <option value="text">Text Post</option>
-            <option value="poll">Poll Post</option>
-        </select>
-        <button class="submitpost">Submit</button>
+            <label for="postcategory">Select Category:</label>
+            <select id="postcategory" name="category">
+                <option value="image">Image Post</option>
+                <option value="text">Text Post</option>
+                <option value="poll">Poll Post</option>
+            </select>
+            <button type="submit" class="submitpost">Submit</button>
+        </form>
     </div>
 </div>
+
+{{#each posts}}
 <div class="content">
+    <h1>{{this.title}}</h1>
+    <p><strong>by:</strong> {{this.author}}</p>
     
-    <h1>I NEED HELP</h1>
-    <p><strong>by:</strong> Brainrot</p>
+    {{#if this.imageUrl}}
+    <img src="{{this.imageUrl}}" alt="Post Image">
+    {{/if}}
     
-    <img src="https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg" alt="Post Image">
+    <p class="post-content">{{this.content}}</p>
     
     <div class="tags">
-        <span>#subject</span>
-        <span>#help</span>
-        <span>#study</span>
+        {{#each this.tags}}
+        <span>{{this}}</span>
+        {{/each}}
     </div>
 
     <div class="interaction-buttons">
-        <button class="like" onclick="handleLike(this)">Like</button>
-        <button class="dislike" onclick="handleDislike(this)">Dislike</button>    
-        <span class="vote-counter">0</span>
+        <button class="like" onclick="handleLike('{{this._id}}')">Like</button>
+        <button class="dislike" onclick="handleDislike('{{this._id}}')">Dislike</button>    
+        <span class="vote-counter">{{this.likes}}</span>
         <button class="comment" onclick="toggleCommentbox(this)">Comment</button>
-        <button class="edit-post" onclick="editPost(this)">Edit Post</button>
-        <button class="delete-post" onclick="deletePost(this)">Delete Post</button>
+        <button class="edit-post" onclick="editPost('{{this._id}}')">Edit Post</button>
+        <button class="delete-post" onclick="deletePost('{{this._id}}')">Delete Post</button>
     </div>
 
     <div class="commentbox">
-        <textarea placeholder="Write a comment..."></textarea>
-        <button>Submit</button>
+        <form action="/comment/add" method="post">
+            <input type="hidden" name="postId" value="{{this._id}}">
+            <textarea name="content" placeholder="Write a comment..."></textarea>
+            <button type="submit">Submit</button>
+        </form>
     </div>
 
     <div class="comments">
-        <p><strong>StrongHelper:</strong> Ok I will help! </p> 
-        <p><strong>Brainrot:</strong> frfr </p>    
+        <a href="/post/{{this._id}}">view all comments by users</a>
     </div>
 </div>
+{{/each}}
