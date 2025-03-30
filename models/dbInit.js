@@ -107,33 +107,70 @@ const sampleComments = [
     }
 ];
 
+// async function initializeDatabase() {
+//     try {
+//         const conn = await client.connect();
+//         console.log('Connected to MongoDB at ' + dURL);
+        
+//         const db = client.db(databaseName);
+    
+//         await db.createCollection(usersCollection);
+//         await db.createCollection(postsCollection);
+//         await db.createCollection(commentsCollection);
+        
+//         await db.collection(usersCollection).deleteMany({});
+//         await db.collection(postsCollection).deleteMany({});
+//         await db.collection(commentsCollection).deleteMany({});
+    
+//         const usersResult = await db.collection(usersCollection).insertMany(sampleUsers);
+//         const postsResult = await db.collection(postsCollection).insertMany(samplePosts);
+//         const postIds = Object.values(postsResult.insertedIds);
+        
+//         sampleComments[0].postId = postIds[0].toString();
+//         sampleComments[1].postId = postIds[0].toString();
+//         sampleComments[2].postId = postIds[1].toString();
+//         sampleComments[3].postId = postIds[2].toString();
+//         sampleComments[4].postId = postIds[4].toString();
+        
+//         const commentsResult = await db.collection(commentsCollection).insertMany(sampleComments);
+        
+//     } catch (error) {
+//         console.error('Error initializing the database:', error);
+//     } finally {
+//         await client.close();
+//     }
+// }
+
 async function initializeDatabase() {
     try {
         const conn = await client.connect();
         console.log('Connected to MongoDB at ' + dURL);
         
         const db = client.db(databaseName);
-    
-        await db.createCollection(usersCollection);
-        await db.createCollection(postsCollection);
-        await db.createCollection(commentsCollection);
-        
-        await db.collection(usersCollection).deleteMany({});
-        await db.collection(postsCollection).deleteMany({});
-        await db.collection(commentsCollection).deleteMany({});
-    
-        const usersResult = await db.collection(usersCollection).insertMany(sampleUsers);
-        const postsResult = await db.collection(postsCollection).insertMany(samplePosts);
-        const postIds = Object.values(postsResult.insertedIds);
-        
-        sampleComments[0].postId = postIds[0].toString();
-        sampleComments[1].postId = postIds[0].toString();
-        sampleComments[2].postId = postIds[1].toString();
-        sampleComments[3].postId = postIds[2].toString();
-        sampleComments[4].postId = postIds[4].toString();
-        
-        const commentsResult = await db.collection(commentsCollection).insertMany(sampleComments);
-        
+
+        // Check if collections are empty before inserting sample data
+        const usersCount = await db.collection(usersCollection).countDocuments();
+        const postsCount = await db.collection(postsCollection).countDocuments();
+        const commentsCount = await db.collection(commentsCollection).countDocuments();
+
+        if (usersCount === 0) {
+            await db.collection(usersCollection).insertMany(sampleUsers);
+        }
+        if (postsCount === 0) {
+            const postsResult = await db.collection(postsCollection).insertMany(samplePosts);
+            const postIds = Object.values(postsResult.insertedIds);
+
+            // Update sample comments with post IDs
+            sampleComments[0].postId = postIds[0].toString();
+            sampleComments[1].postId = postIds[0].toString();
+            sampleComments[2].postId = postIds[1].toString();
+            sampleComments[3].postId = postIds[2].toString();
+            sampleComments[4].postId = postIds[4].toString();
+
+            if (commentsCount === 0) {
+                await db.collection(commentsCollection).insertMany(sampleComments);
+            }
+        }
     } catch (error) {
         console.error('Error initializing the database:', error);
     } finally {
