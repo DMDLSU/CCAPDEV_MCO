@@ -56,6 +56,7 @@ These are not final yet, and subject to change as such.
   - express-flash, connect-flash
   - --save-dev @types/node
   - toastr
+  - bcrypt
 
 ### 2. Run app.js via Command Shell
  - `X:\(application directory)\> node app.js`
