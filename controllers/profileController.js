@@ -5,13 +5,15 @@ const tempuserhehe = require('../models/tempuserhehe');
 //user login
 async function login(req, res) {
     try {
-        const { password, username } = req.body;
+        const { username, password } = req.body;
 
-        // Retrieve the user from the database
+        // Ensure password is a string (prevent array issues)
+        const plainPassword = Array.isArray(password) ? password[0] : password;
+
+        // Retrieve user from database
         const user = await userModel.getuserUsername(username);
 
         if (!user) {
-            // If the user does not exist
             return res.render('login', { 
                 title: 'Login', 
                 layout: 'loginLayout', 
@@ -19,18 +21,17 @@ async function login(req, res) {
             });
         }
 
-        // Ensure the hashed password is treated as a string
-        const hashedPassword = user.password.toString();
+        console.log('Entered Password:', plainPassword);
+        console.log('Stored Hashed Password:', user.password);
 
-        // Compare the provided password with the hashed password in the database
-        const isMatch = await bcrypt.compare(password, hashedPassword);
+        // Compare password
+        const isMatch = await bcrypt.compare(plainPassword, user.password);
+        console.log('Password Match:', isMatch);
 
         if (isMatch) {
-            // If the password matches, set the current user and redirect to the home page
             tempuserhehe.setcurrentUser(user);
             return res.redirect('/');
         } else {
-            // If the password does not match
             return res.render('login', { 
                 title: 'Login', 
                 layout: 'loginLayout', 
@@ -47,64 +48,24 @@ async function login(req, res) {
     }
 }
 
-// async function login(req, res) {
-//     try {
-//         const { password, username } = req.body;
-
-//         console.log('Login attempt:', { username, password });
-
-//         // Retrieve the user from the database
-//         const user = await userModel.getuserUsername(username);
-//         if (!user) {
-//             console.log('User not found');
-//             return res.render('login', { 
-//                 title: 'Login', 
-//                 layout: 'loginLayout', 
-//                 error: 'Invalid username or password' 
-//             });
-//         }
-
-//         console.log('Stored password:', user.password);
-//         console.log('Password to hash:', password);
-//         // Check if the password matches
-//         const isMatch = await bcrypt.compare(password, user.password);
-//         console.log('Password match:', isMatch);
-
-//         if (isMatch) {
-//             tempuserhehe.setcurrentUser(user);
-//             return res.redirect('/');
-//         } else {
-//             return res.render('login', { 
-//                 title: 'Login', 
-//                 layout: 'loginLayout', 
-//                 error: 'Invalid username or password' 
-//             });
-//         }
-//     } catch (error) {
-//         console.error('Login error:', error);
-//         res.status(500).render('login', { 
-//             title: 'Login', 
-//             layout: 'loginLayout', 
-//             error: 'Server error. Please try again later.' 
-//         });
-//     }
-// }
-
-//user reegistration
 async function register(req, res) {
     try {
-        const { email, password, username} = req.body;
+        const { email, password, username } = req.body;
+
+        // Ensure password is always a string
+        const plainPassword = Array.isArray(password) ? password[0] : String(password);
+
         // Validate input
-        if (!email || !password || !username) {
+        if (!email || !plainPassword || !username) {
             return res.render('register', { 
                 title: 'Register', 
                 layout: 'loginLayout', 
                 error: 'All fields are required.' 
             });
         }
-       //checker if username exist
+
+        // Check if username already exists
         const existingUser = await userModel.getuserUsername(username);
-        
         if (existingUser) {
             return res.render('register', { 
                 title: 'Register', 
@@ -112,36 +73,42 @@ async function register(req, res) {
                 error: 'This username is already used, please use another one.' 
             });
         }
-    
-        const hashedPassword = await bcrypt.hash(String(password), 10);
+
+        // Hash password correctly
+        const hashedPassword = await bcrypt.hash(plainPassword, 10);
+        console.log('Plain Password:', plainPassword);
         console.log('Hashed Password:', hashedPassword);
-        const newUser = await userModel.createUser({ username, password:hashedPassword, email });
-        // console.log('Plain Password:', password);
-        // console.log('Hashed Password from DB:', user.password);
-        // console.log('Password Match:', await bcrypt.compare(password, user.password.toString()));
-        
-        // Set the current user after registration
+
+        // Save user
+        const newUser = await userModel.createUser({ 
+            username, 
+            password: hashedPassword, 
+            email 
+        });
+
+        // Set the current user
         tempuserhehe.setcurrentUser({
             username,
             email, 
-            password:hashedPassword,
+            password: hashedPassword,
             _id: newUser.insertedId,
             joinDate: new Date(),
             posts: 0,
             comments: 0
         });
-        
-        //redirect to home page instead of login
+
+        // Redirect to home page
         return res.redirect('/'); 
     } catch (error) {
-        console.error('registration error:', error);
+        console.error('Registration error:', error);
         res.status(500).render('register', { 
-             title: 'Register', 
+            title: 'Register', 
             layout: 'loginLayout', 
-            error: 'server error. Please try again later.' 
+            error: 'Server error. Please try again later.' 
         });
     }
 }
+
 
 // logout
 function logout(req, res) {
