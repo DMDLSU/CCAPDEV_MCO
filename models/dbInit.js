@@ -1,6 +1,7 @@
 const { MongoClient } = require('mongodb');
 const dURL = "mongodb://127.0.0.1:27017/";
 const client = new MongoClient(dURL);
+const bcrypt = require("bcrypt");
 
 const databaseName = "forumdb";
 const usersCollection = "users";
@@ -154,7 +155,8 @@ async function initializeDatabase() {
         const commentsCount = await db.collection(commentsCollection).countDocuments();
 
         if (usersCount === 0) {
-            await db.collection(usersCollection).insertMany(sampleUsers);
+            const hashedUsers = await hashPasswords(sampleUsers);
+            await db.collection(usersCollection).insertMany(hashedUsers);
         }
         if (postsCount === 0) {
             const postsResult = await db.collection(postsCollection).insertMany(samplePosts);
@@ -176,6 +178,14 @@ async function initializeDatabase() {
     } finally {
         await client.close();
     }
+}
+
+async function hashPasswords(users) {
+    for(let user of users) {
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        user.password = hashedPassword;
+    }
+    return users;
 }
 
 module.exports = { initializeDatabase };
