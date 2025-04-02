@@ -68,7 +68,7 @@ app.use(bodyParser.json());
 
 
 app.use((req, res, next) => {
-    res.locals.currentUser = tempuserhehe.getcurrentUser();
+    res.locals.currentUser = tempuserhehe.getcurrentUser(req);
     next();
 });
 
@@ -79,8 +79,7 @@ app.get('/register', (req, res) => res.render('register', { title: 'Register', l
 app.get('/logout', profileController.logout);
 app.get('/post/:id', postController.getpostID);
 
-//access registration
-app.post('/login', profileController.login);
+//access registratio
 app.post('/register', profileController.register);
 
 //access posts 

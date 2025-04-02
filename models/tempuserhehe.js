@@ -1,13 +1,18 @@
-//temporary storage of current user
-let currentUser = null;
 
-//set the temporary user
-function setcurrentUser(user) {
-    currentUser = user;
+let sessionStore = {};
+
+
+function setcurrentUser(req, user) {
+    if (req && req.session) {
+        req.session.user = user;
+    }
 }
 
-function getcurrentUser() {
-    return currentUser;
+function getcurrentUser(req) {
+    if (req && req.session) {
+        return req.session.user;
+    }
+    return null;
 }
 
 module.exports = {
